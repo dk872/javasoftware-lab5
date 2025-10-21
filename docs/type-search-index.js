@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"org.example","l":"ApartmentApplianceManager"},{"p":"org.example","l":"ElectricAppliance"},{"p":"org.example","l":"HairDryer"},{"p":"org.example","l":"Laptop"},{"p":"org.example","l":"Main"},{"p":"org.example","l":"Refrigerator"}];updateSearchResults();
