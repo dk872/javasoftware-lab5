@@ -73,7 +73,6 @@ public class ApartmentApplianceManager {
      * @param maxLevel The maximum radiation level (inclusive).
      * @return A list of appliances that match the radiation range.
      * @throws IllegalArgumentException if the minimum level is greater than the maximum level or levels are negative.
-     * @throws RuntimeException if no appliances are found in the specified range.
      */
     public List<ElectricAppliance> findByRadiationRange(double minLevel, double maxLevel) {
         if (minLevel < 0 || maxLevel < 0 || minLevel > maxLevel) {
