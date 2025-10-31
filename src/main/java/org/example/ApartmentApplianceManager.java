@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.NoSuchElementException;
 
 /**
  * Manages a collection of ElectricAppliance objects in an apartment.
@@ -69,31 +70,32 @@ public class ApartmentApplianceManager {
 
     /**
      * Finds appliances that fall within a specified range of electromagnetic radiation level.
-     * @param minLevel The minimum radiation level (inclusive).
-     * @param maxLevel The maximum radiation level (inclusive).
+     * @param minEMR The minimum radiation level (inclusive).
+     * @param maxEMR The maximum radiation level (inclusive).
      * @return A list of appliances that match the radiation range.
      * @throws IllegalArgumentException if the minimum level is greater than the maximum level or levels are negative.
+     * @throws NoSuchElementException якщо не знайдено жодного пристрою у діапазоні
      */
-    public List<ElectricAppliance> findByRadiationRange(double minLevel, double maxLevel) {
-        if (minLevel < 0 || maxLevel < 0 || minLevel > maxLevel) {
-            throw new IllegalArgumentException("Invalid radiation range provided. Min must be <= Max and non-negative.");
+    public List<ElectricAppliance> findByRadiationRange(double minEMR, double maxEMR) {
+        if (minEMR < 0 || maxEMR < 0) {
+            throw new IllegalArgumentException("EMR values cannot be negative");
         }
-        if (appliances.isEmpty()) {
-            System.out.println("Warning: Appliance list is empty, no search performed.");
-            return new ArrayList<>();
+        if (minEMR > maxEMR) {
+            throw new IllegalArgumentException("Minimum EMR cannot be greater than maximum EMR");
         }
 
-        // Use Java Stream API to filter based on the EMR level
-        List<ElectricAppliance> results = appliances.stream()
-                .filter(a -> a.getElectromagneticRadiationLevel() >= minLevel &&
-                        a.getElectromagneticRadiationLevel() <= maxLevel)
+        List<ElectricAppliance> filtered = appliances.stream()
+                .filter(appliance -> appliance.getElectromagneticRadiationLevel() >= minEMR
+                        && appliance.getElectromagneticRadiationLevel() <= maxEMR)
                 .collect(Collectors.toList());
 
-        if (results.isEmpty()) {
-            System.out.println("No appliances found in range [" + minLevel + " - " + maxLevel + "]");
+        if (filtered.isEmpty()) {
+            throw new NoSuchElementException(
+                    "No appliances found with EMR in the range [" + minEMR + ", " + maxEMR + "]"
+            );
         }
 
-        return results;
+        return filtered;
     }
 
     /**

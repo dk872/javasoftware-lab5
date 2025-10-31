@@ -102,34 +102,32 @@ public class Main {
 
         // --- Operation 4: Find Appliance by EMR Range (Success/Failure) ---
         System.out.println("\n--- 6. Searching for Appliance by Electromagnetic Radiation Range ---");
-        double minEMR = 0.5;
-        double maxEMR = 4.0;
 
         try {
-            // Successful search demonstration
-            System.out.printf("Search Range 1 (Success): EMR between %.2f and %.2f\n", minEMR, maxEMR);
-            List<ElectricAppliance> foundAppliances = manager.findByRadiationRange(minEMR, maxEMR);
-            System.out.println("Found Appliances:");
-            foundAppliances.forEach(System.out::println);
+            double minEMR = 0.5;
+            double maxEMR = 4.0;
+            System.out.printf("Searching for EMR between %.2f and %.2f\n", minEMR, maxEMR);
+            List<ElectricAppliance> found = manager.findByRadiationRange(minEMR, maxEMR);
+            found.forEach(System.out::println);
 
             // Successful search demonstration (High EMR)
             double highMinEMR = 5.0;
             double highMaxEMR = 10.0;
-            System.out.printf("\nSearch Range 2 (Success): EMR between %.2f and %.2f\n", highMinEMR, highMaxEMR);
-            List<ElectricAppliance> highRadiationAppliances = manager.findByRadiationRange(highMinEMR, highMaxEMR);
-            System.out.println("Found High Radiation Appliances:");
-            highRadiationAppliances.forEach(System.out::println);
+            System.out.printf("\nSearching for EMR between %.2f and %.2f\n", highMinEMR, highMaxEMR);
+            List<ElectricAppliance> highEMRFound = manager.findByRadiationRange(highMinEMR, highMaxEMR);
+            highEMRFound.forEach(System.out::println);
 
-            // Intentional RuntimeException (Search Failure)
+            // Intentional NoSuchElementException (Search Failure)
             double failureMinEMR = 6.0;
             double failureMaxEMR = 7.0;
-            System.out.printf("\nSearch Range 3 (Failure Expected: RuntimeException): EMR between %.2f and %.2f\n",
+            System.out.printf("\nSearching for EMR between %.2f and %.2f (expected to fail)\n",
                     failureMinEMR, failureMaxEMR);
             manager.findByRadiationRange(failureMinEMR, failureMaxEMR);
 
-        } catch (RuntimeException e) {
-            // This catches the specific RuntimeException thrown when no appliance is found
-            System.err.println("Search Failure Handled: " + e.getMessage());
+        } catch (NoSuchElementException e) {
+            System.err.println("No appliance found in the given EMR range: " + e.getMessage());
+        } catch (IllegalArgumentException e) {
+            System.err.println("Invalid EMR range provided: " + e.getMessage());
         }
 
         // --- Exception Handling Demonstration (Invalid Input) ---
