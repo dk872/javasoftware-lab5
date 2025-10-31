@@ -26,6 +26,9 @@ public abstract class ElectricAppliance {
      */
     public ElectricAppliance(String name, int powerConsumptionW, double electromagneticRadiationLevel) {
         // Input validation for safety and logic
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Name must not be null or empty.");
+        }
         if (powerConsumptionW <= 0) {
             throw new IllegalArgumentException("Power consumption must be a positive value.");
         }
