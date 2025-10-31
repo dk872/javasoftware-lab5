@@ -74,7 +74,7 @@ public class ApartmentApplianceManager {
      * @param maxEMR The maximum radiation level (inclusive).
      * @return A list of appliances that match the radiation range.
      * @throws IllegalArgumentException if the minimum level is greater than the maximum level or levels are negative.
-     * @throws NoSuchElementException якщо не знайдено жодного пристрою у діапазоні
+     * @throws NoSuchElementException if no device is found in range
      */
     public List<ElectricAppliance> findByRadiationRange(double minEMR, double maxEMR) {
         if (minEMR < 0 || maxEMR < 0) {
