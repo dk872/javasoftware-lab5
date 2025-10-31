@@ -64,7 +64,7 @@ public class ApartmentApplianceManager {
 
         // Use Comparator to sort by power consumption
         appliances.sort(Comparator.comparingInt(ElectricAppliance::getPowerConsumptionW));
-        return appliances;
+        return new ArrayList<>(appliances);
     }
 
     /**
@@ -103,6 +103,6 @@ public class ApartmentApplianceManager {
      * @return The list of all appliances currently managed.
      */
     public List<ElectricAppliance> getAllAppliances() {
-        return appliances;
+        return new ArrayList<>(appliances);
     }
 }
