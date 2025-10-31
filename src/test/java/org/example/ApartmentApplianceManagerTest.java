@@ -95,10 +95,10 @@ class ApartmentApplianceManagerTest {
     void testFindByRadiationRange_RangeNotFoundThrowsRuntimeException() {
         // Appliances EMR: 0.5, 0.1, 5.0
 
-        // Search for a range where no appliances exist
-        assertThrows(RuntimeException.class, () -> {
-            manager.findByRadiationRange(2.0, 4.0);
-        }, "Should throw RuntimeException if no appliances are found in the range.");
+        List<ElectricAppliance> results = manager.findByRadiationRange(2.0, 4.0);
+
+        assertTrue(results.isEmpty(),
+                "Expected no appliances to be found in the range [2.0 - 4.0].");
     }
 
     @Test

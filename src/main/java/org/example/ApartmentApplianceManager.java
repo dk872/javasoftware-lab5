@@ -91,8 +91,7 @@ public class ApartmentApplianceManager {
                 .collect(Collectors.toList());
 
         if (results.isEmpty()) {
-            throw new RuntimeException(
-                    "Search Error: No appliance found within the radiation range [" + minLevel + " - " + maxLevel + "].");
+            System.out.println("No appliances found in range [" + minLevel + " - " + maxLevel + "]");
         }
 
         return results;
