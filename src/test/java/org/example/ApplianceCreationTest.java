@@ -53,10 +53,10 @@ class ApplianceCreationTest {
     @Test
     void testRefrigeratorSpecificFields() {
         Refrigerator fridgeWithFreezer = new Refrigerator("Big Fridge", 200, 0.9, true);
-        assertTrue(fridgeWithFreezer.isHasFreezer());
+        assertTrue(fridgeWithFreezer.isFreezerPresent());
 
         Refrigerator miniFridge = new Refrigerator("Small Fridge", 70, 0.4, false);
-        assertFalse(miniFridge.isHasFreezer());
+        assertFalse(miniFridge.isFreezerPresent());
     }
 
     @Test

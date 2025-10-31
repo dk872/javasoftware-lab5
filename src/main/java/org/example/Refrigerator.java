@@ -23,7 +23,7 @@ public class Refrigerator extends ElectricAppliance {
      * Checks if the refrigerator has a separate freezer.
      * @return {@code true} if it has a freezer, {@code false} otherwise.
      */
-    public boolean isHasFreezer() {
+    public boolean isFreezerPresent() {
         return hasFreezer;
     }
 

@@ -72,7 +72,7 @@ public class Main {
                     .orElseThrow(() -> new NoSuchElementException("HairDryer not found for demonstration."));
 
             System.out.println("\n--- 2.1 Appliance Details Check (Safe Casting) ---");
-            System.out.println(fridgeInstance.getName() + " check: Has freezer? " + fridgeInstance.isHasFreezer());
+            System.out.println(fridgeInstance.getName() + " check: Has freezer? " + fridgeInstance.isFreezerPresent());
             System.out.println(laptopInstance.getName() + " check: Screen size is " +
                     laptopInstance.getScreenSizeInches() + " inches.");
             System.out.println(dryerInstance.getName() + " check: Has " + dryerInstance.getSpeedSettings()
