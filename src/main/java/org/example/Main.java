@@ -1,6 +1,7 @@
 package org.example;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * Main class to demonstrate the functionality of the ElectricAppliance hierarchy
@@ -50,19 +51,35 @@ public class Main {
         System.out.println("\n--- 2. Initial State of Appliances ---");
         manager.getAllAppliances().forEach(System.out::println);
 
-        // Since the list maintains the original creation order (or is close to it), 
-        // we can safely cast and use the specific getters for demonstration.
+        // We use streams and filter by type to safely retrieve one instance of each subclass
         try {
-            Refrigerator fridge = (Refrigerator) manager.getAllAppliances().get(0);
-            Laptop laptop = (Laptop) manager.getAllAppliances().get(1);
-            HairDryer dryer = (HairDryer) manager.getAllAppliances().get(2);
+            Refrigerator fridgeInstance = manager.getAllAppliances().stream()
+                    .filter(a -> a instanceof Refrigerator)
+                    .map(a -> (Refrigerator) a)
+                    .findFirst()
+                    .orElseThrow(() -> new NoSuchElementException("Refrigerator not found for demonstration."));
 
-            System.out.println("\n--- 2.1 Appliance Details Check ---");
-            System.out.println(fridge.getName() + " check: Has freezer? " + fridge.isHasFreezer());
-            System.out.println(laptop.getName() + " check: Screen size is " + laptop.getScreenSizeInches() + " inches.");
-            System.out.println(dryer.getName() + " check: Has " + dryer.getSpeedSettings() + " speed settings.");
-        } catch (ClassCastException e) {
-            System.err.println("Error demonstrating unique getters: List order mismatch.");
+            Laptop laptopInstance = manager.getAllAppliances().stream()
+                    .filter(a -> a instanceof Laptop)
+                    .map(a -> (Laptop) a)
+                    .findFirst()
+                    .orElseThrow(() -> new NoSuchElementException("Laptop not found for demonstration."));
+
+            HairDryer dryerInstance = manager.getAllAppliances().stream()
+                    .filter(a -> a instanceof HairDryer)
+                    .map(a -> (HairDryer) a)
+                    .findFirst()
+                    .orElseThrow(() -> new NoSuchElementException("HairDryer not found for demonstration."));
+
+            System.out.println("\n--- 2.1 Appliance Details Check (Safe Casting) ---");
+            System.out.println(fridgeInstance.getName() + " check: Has freezer? " + fridgeInstance.isHasFreezer());
+            System.out.println(laptopInstance.getName() + " check: Screen size is " +
+                    laptopInstance.getScreenSizeInches() + " inches.");
+            System.out.println(dryerInstance.getName() + " check: Has " + dryerInstance.getSpeedSettings()
+                    + " speed settings.");
+
+        } catch (NoSuchElementException e) {
+            System.err.println("Error demonstrating unique getters (Handled): " + e.getMessage());
         }
 
         // --- Operation 1: Plug in appliances ---
