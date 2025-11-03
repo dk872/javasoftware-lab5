@@ -6,20 +6,20 @@ import java.util.NoSuchElementException;
 /**
  * Main class to demonstrate the functionality of the ElectricAppliance hierarchy
  * and the ApartmentApplianceManager. Includes demonstration of exception handling.
+ * The main method is broken down into smaller, logical methods for better readability.
  */
 public class Main {
-    /**
-     * The main entry point for the application.
-     * Initializes the appliance manager, creates sample appliances, 
-     * performs operations (plugging in, calculating power, sorting, searching), 
-     * and demonstrates exception handling.
-     *
-     * @param args Command line arguments (not used).
-     */
-    public static void main(String[] args) {
-        // Initialize the manager
-        ApartmentApplianceManager manager = new ApartmentApplianceManager();
 
+    /** The central manager instance used across all demonstration methods. */
+    private static ApartmentApplianceManager manager;
+
+    /**
+     * Initializes the ApartmentApplianceManager and adds sample appliances.
+     * Handles potential initialization exceptions (e.g., invalid power values).
+     * @return true if initialization was successful, false otherwise.
+     */
+    private static boolean initializeManager() {
+        manager = new ApartmentApplianceManager();
         System.out.println("--- 1. Initializing Appliances ---");
 
         try {
@@ -38,15 +38,22 @@ public class Main {
             manager.addAppliance(workLaptop);
 
             System.out.println("All appliances added successfully.");
+            return true;
 
         } catch (IllegalArgumentException e) {
             System.err.println("Configuration Error (Handled): " + e.getMessage());
-            return; // Stop if setup fails
+            return false;
         } catch (Exception e) {
             System.err.println("An unexpected error occurred during initialization (Handled): " + e.getMessage());
-            return;
+            return false;
         }
+    }
 
+    /**
+     * Prints the initial state of the appliances and demonstrates casting to subclasses
+     * to access specific getters (e.g., hasFreezer, getScreenSizeInches).
+     */
+    private static void demonstrateInitialStateAndSubclassGetters() {
         // Print initial state
         System.out.println("\n--- 2. Initial State of Appliances ---");
         manager.getAllAppliances().forEach(System.out::println);
@@ -81,7 +88,12 @@ public class Main {
         } catch (NoSuchElementException e) {
             System.err.println("Error demonstrating unique getters (Handled): " + e.getMessage());
         }
+    }
 
+    /**
+     * Demonstrates plugging in/unplugging appliances and calculates the total consumed power.
+     */
+    private static void demonstratePowerManagement() {
         // --- Operation 1: Plug in appliances ---
         System.out.println("\n--- 3. Plugging in Appliances ---");
         manager.getAllAppliances().get(0).plugIn(); // Fridge (continuous use)
@@ -94,12 +106,23 @@ public class Main {
         System.out.println("\n--- 4. Calculating Total Consumed Power ---");
         int totalPower = manager.calculateTotalPluggedInPower();
         System.out.println("Total power consumed by plugged-in appliances: " + totalPower + "W");
+    }
 
+    /**
+     * Demonstrates sorting appliances by power consumption.
+     */
+    private static void demonstrateSorting() {
         // --- Operation 3: Sort Appliances by Power ---
         System.out.println("\n--- 5. Sorting Appliances by Power Consumption (Ascending) ---");
         List<ElectricAppliance> sortedList = manager.sortByPower();
         sortedList.forEach(System.out::println);
+    }
 
+    /**
+     * Demonstrates searching for appliances by EMR range, including success, failure,
+     * and intentional error cases (invalid range).
+     */
+    private static void demonstrateSearchAndExceptionCases() {
         // --- Operation 4: Find Appliance by EMR Range (Success/Failure) ---
         System.out.println("\n--- 6. Searching for Appliance by Electromagnetic Radiation Range ---");
 
@@ -142,5 +165,22 @@ public class Main {
         } catch (IllegalArgumentException e) {
             System.err.println("Successfully handled IllegalArgumentException: " + e.getMessage());
         }
+    }
+
+    /**
+     * The main entry point for the application.
+     * Initializes the appliance manager and sequentially runs all demonstration steps.
+     *
+     * @param args Command line arguments (not used).
+     */
+    public static void main(String[] args) {
+        if (!initializeManager()) {
+            return;
+        }
+
+        demonstrateInitialStateAndSubclassGetters();
+        demonstratePowerManagement();
+        demonstrateSorting();
+        demonstrateSearchAndExceptionCases();
     }
 }
